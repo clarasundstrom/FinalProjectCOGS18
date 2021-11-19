@@ -1,0 +1,101 @@
+PageManager:
+    StartPage:
+    CreateFamilyPage:
+    FamilyInfoPage:
+    CreatePersonPage:
+    FamilyConversationPage:
+
+<StartPage>:
+    name: "start"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text:  "Welcome to COGS GAME!"
+            font_size: 32
+
+        Button:
+            text: "PLAY"
+            font_size: 32
+            on_release: app.root.current = "createfamily"
+
+
+<CreateFamilyPage>:
+    name: "createfamily"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text:  "Create a family"
+            font_size: 32
+
+        Button:
+            text: "Continue"
+            font_size: 32
+            on_release: app.root.current = "familyinfo"
+
+
+<FamilyInfoPage>:
+    name: "familyinfo"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text:  "*FAMILY NAME* family"
+            font_size: 32
+
+        Button:
+            text: "Add family member"
+            font_size: 32
+            on_release: app.root.current = "createperson"
+
+        Button:
+            text: "Have a conversation"
+            font_size: 32
+            on_release: app.root.current = "familyconversation"
+
+
+<CreatePersonPage>:
+    name: "createperson"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text:  "Create a person to join *FAMILY NAME* family"
+            font_size: 32
+
+        Button:
+            text: "Add to *FAMILY NAME* family"
+            font_size: 32
+            on_release: app.root.current = "familyinfo"
+
+        Button:
+            text: "Go back"
+            font_size: 32
+            on_release: app.root.current = "familyinfo"
+
+<FamilyConversationPage>:
+    name: "familyconversation"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text:  "Family Conversation"
+            font_size: 32
+
+        Button:
+            text: "Go back"
+            font_size: 32
+            on_release: app.root.current = "familyinfo"
+
+
