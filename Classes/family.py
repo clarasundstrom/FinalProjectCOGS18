@@ -59,15 +59,16 @@ class Family():
 
 
 #GUI related code
+
 class FamilyInfoPage(Screen):
     kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
     def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
         super().__init__(**kwargs)
 
-    def load_info(self):
+    #def load_info(self, name):
         """ The idea is to load the family name into the label in family info page :(
         """
-        self.root.ids.lbl_family_title.text = f'{self.root.ids.l_name_input.text} family'
+        #self.root.ids.lbl_family_title.text = f'{name} family'
 
 

@@ -13,10 +13,12 @@
         size: root.width, root.height
 
         Label:
+            id: welcome_lbl
             text:  "Welcome to COGS GAME!"
             font_size: 32
 
         Button:
+            id: id_btn
             text: "PLAY"
             font_size: 32
             on_release: app.root.current = "create_family_page"
@@ -30,13 +32,15 @@
         size: root.width, root.height
 
         Label:
-            text:  "Create a family"
+            id: create_family_lbl
+            text: app.root.manager.get_screen("start").ids.id_btn.text
             font_size: 32
 
         TextInput:
             id: l_name_input
 
         Button:
+            id: continue_btn
             text: "Continue"
             font_size: 32
             on_release: app.root.current = "family_info_page"
@@ -53,7 +57,7 @@
 
         Label:
             id: lbl_family_title
-            text: root.load_info()
+            text: "Hej"
             font_size: 32
 
         Button:
