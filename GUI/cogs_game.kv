@@ -1,4 +1,4 @@
-PageManager:
+<PageManager>:
     StartPage:
     CreateFamilyPage:
     FamilyInfoPage:
@@ -19,11 +19,11 @@ PageManager:
         Button:
             text: "PLAY"
             font_size: 32
-            on_release: app.root.current = "createfamily"
+            on_release: app.root.current = "create_family_page"
 
 
 <CreateFamilyPage>:
-    name: "createfamily"
+    name: "create_family_page"
 
     BoxLayout:
         orientation: "vertical"
@@ -33,36 +33,42 @@ PageManager:
             text:  "Create a family"
             font_size: 32
 
+        TextInput:
+            id: l_name_input
+
         Button:
             text: "Continue"
             font_size: 32
-            on_release: app.root.current = "familyinfo"
+            on_release: app.root.current = "family_info_page"
+            on_release: root.create_family(l_name_input.text) #calls create_family function from main.py and
+                                                             #which will take string from l_name_input as input
 
 
 <FamilyInfoPage>:
-    name: "familyinfo"
+    name: "family_info_page"
 
     BoxLayout:
         orientation: "vertical"
         size: root.width, root.height
 
         Label:
-            text:  "*FAMILY NAME* family"
+            id: lbl_family_title
+            text: root.load_info()
             font_size: 32
 
         Button:
             text: "Add family member"
             font_size: 32
-            on_release: app.root.current = "createperson"
+            on_release: app.root.current = "create_person_page"
 
         Button:
             text: "Have a conversation"
             font_size: 32
-            on_release: app.root.current = "familyconversation"
+            on_release: app.root.current = "family_conversation_page"
 
 
 <CreatePersonPage>:
-    name: "createperson"
+    name: "create_person_page"
 
     BoxLayout:
         orientation: "vertical"
@@ -72,18 +78,35 @@ PageManager:
             text:  "Create a person to join *FAMILY NAME* family"
             font_size: 32
 
+        Label:
+            id: set_rel_lbl
+            text: "Determine relationships with other family members*"
+            font_size: 32
+
+        Spinner:
+            id: relationship_options
+            text: "Choose..."
+            values: ["hej", "hello", "salut"]
+
+            on_text: root.spinner_clicked(relationship_options.text)
+
+        Button:
+            text: "Create relationship"
+            font_size: 32
+            on_release: set_relation(selected_option)
+
         Button:
             text: "Add to *FAMILY NAME* family"
             font_size: 32
-            on_release: app.root.current = "familyinfo"
+            on_release: app.root.current = "family_info_page"
 
         Button:
             text: "Go back"
             font_size: 32
-            on_release: app.root.current = "familyinfo"
+            on_release: app.root.current = "family_info_page"
 
 <FamilyConversationPage>:
-    name: "familyconversation"
+    name: "family_conversation_page"
 
     BoxLayout:
         orientation: "vertical"
@@ -93,9 +116,16 @@ PageManager:
             text:  "Family Conversation"
             font_size: 32
 
+        Spinner:
+            id: player_options
+            text: "I want to play as..."
+            values: ["mamma", "pappa", "barn"]
+
+            on_text: root.spinner_clicked(relationship_options.text)
+
         Button:
             text: "Go back"
             font_size: 32
-            on_release: app.root.current = "familyinfo"
+            on_release: app.root.current = "family_info_page"
 
 

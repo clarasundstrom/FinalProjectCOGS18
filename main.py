@@ -1,75 +1,63 @@
 #GUI related imports
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.spinner import Spinner
+from Classes.family import FamilyInfoPage
+from Classes.person import CreatePersonPage
+from Classes.familyconversation import FamilyConversationPage
 
 #Imports from same directory
 from Classes.person import Person
 from Classes.family import Family
 
 #Defining screens
-class StartPage(Screen):
-    pass
-
-class CreateFamilyPage(Screen):
-    pass
-
-class FamilyInfoPage(Screen):
-    pass
-
-class CreatePersonPage(Screen):
-    pass
-
-class FamilyConversationPage(Screen):
-    pass
-
 class PageManager(ScreenManager):
     pass
 
-#Designating the .kv design file
-#kv = Builder.load_file('GUI/cogs_game.kv')
+class StartPage(Screen):
+    kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
-#class COGSGameApp(App):
-    #def build(self):
-        #return kv
+    def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
+        super().__init__(**kwargs)
 
-#if __name__ == "__main__":
-    #COGSGameApp().run()
+class CreateFamilyPage(Screen):
+    kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
-#Testing
+    def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
+        super().__init__(**kwargs)
 
-#Create a family
-test_family = Family("McGill")
-assert test_family.last_name == "McGill"
+    def create_family(self, name):
+        new_family = Family()
+        new_family.last_name = name
 
-#Create a person
-test_person = Person("Jill", 43)
-assert test_person.name == "Jill" and test_person.age == 43
+        return new_family.last_name
 
-test_person2 = Person("Jill", 2)
-assert test_person2.name == "Jill" and test_person2.age == 2
+#Setting up app
+pm = PageManager()
 
-#Add person to family
-test_family.add_member(test_person)
-assert test_family.members == ["Jill"]
+screens = [StartPage(name = "start_page"), CreateFamilyPage(name = "create_family_page"),
+           FamilyInfoPage(name = "family_info_page"), CreatePersonPage(name = "create_person_page"),
+           FamilyConversationPage(name = "family_conversation_page")]
 
-#Try to add person with existing name
-test_family.add_member(test_person2)
-print(test_family.members)
+for screen in screens:
+    pm.add_widget(screen)
 
-#Check family size
-print(test_family.check_size())
+pm.current = "start_page"
 
-#Change name of person
-#NOTE name will JUST change name in object - not in test_family.members i.e.
-# It's ok as it won't be possible to add person with same name.
-# You can only change name when fail to add to family bc of same name.
+class COGSGameApp(App):
+    def build(self):
+        App.title = "COGS Game"
+        Window.size = (1080, 720)
+        return pm
 
-#test_person.change_name("Lola")
-#print(test_person.name)
+if __name__ == "__main__":
+    COGSGameApp().run()
 
-#Create relations
-print(test_person.relations(test_person2))
+
+#Create relations - remove l8r
+#print(test_person.possible_relations(test_person2))
 
 
 
