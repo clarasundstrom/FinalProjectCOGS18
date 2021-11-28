@@ -5,37 +5,6 @@ from kivy.uix.screenmanager import Screen
 #Imports from same directory
 
 class FamilyConversation():
-
-    def pick_player(alter_ego):
-        """ DOCSTRING
-
-        Parameters
-        ------------
-
-        Output
-        ------------
-        """
-        family_relationships = alter_ego.roles.keys
-
-        return family_relationships #these will then go into a spinner
-
-
-
-    def pick_family_member(alter_ego, picked_member):
-        """ DOCSTRING
-
-              Parameters
-              ------------
-
-              Output
-              ------------
-              """
-
-        convo_premise = alter_ego.roles[picked_member]
-
-        return convo_premise
-
-
     def talk(convo_premise):
         """ DOCSTRING
 
@@ -91,14 +60,3 @@ class FamilyConversation():
                 "Us against mom and dad am I right?",
                 "I'll tell mom!!"
             ]
-
-#GUI related code
-class FamilyConversationPage(Screen):
-    kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
-
-    def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
-        super().__init__(**kwargs)
-
-
-    #def get_player_options(self, family):
-        #return family.members

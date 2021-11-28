@@ -1,131 +1,114 @@
-<PageManager>:
-    StartPage:
-    CreateFamilyPage:
-    FamilyInfoPage:
-    CreatePersonPage:
-    FamilyConversationPage:
+<StartPage>
+    rows: 4
 
-<StartPage>:
-    name: "start"
-
-    BoxLayout:
-        orientation: "vertical"
-        size: root.width, root.height
-
-        Label:
-            text:  "Welcome to COGS GAME!"
-            font_size: 32
-
-        Button:
-            text: "PLAY"
-            font_size: 32
-            on_release: app.root.current = "create_family_page"
-
-
-<CreateFamilyPage>:
-    name: "create_family_page"
+    background_color: (231/255.0, 231/255.0, 231/255.0, 1)
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
     BoxLayout:
         orientation: "vertical"
-        size: root.width, root.height
+
+        padding: 50
+        spacing: 20
 
         Label:
-            text:  "Create a family"
+            id: create_character_lbl
+            text:  "Create your character: "
             font_size: 32
 
-        TextInput:
-            id: l_name_input
+    GridLayout:
+        cols: 2
 
-        Button:
-            text: "Continue"
-            font_size: 32
-            on_release: app.root.current = "family_info_page"
-            on_release: root.create_family(l_name_input.text) #calls create_family function from main.py and
-                                                             #which will take string from l_name_input as input
+        BoxLayout:
+            orientation: "vertical"
+            padding: 50
+            spacing: 30
 
+            Label:
+                id: set_name_lbl
+                text: "Name:"
+                text_size: self.size
 
-<FamilyInfoPage>:
-    name: "family_info_page"
+            TextInput:
+                id: set_name_input
+                size: 250, 50
+                size_hint: None, None
+
+            Label:
+                id: set_age_lbl
+                text: "Age:"
+                text_size: self.size
+
+            TextInput:
+                id: set_name_input
+                size: 250, 50
+                size_hint: None, None
+
+        BoxLayout:
+            orientation: "vertical"
+
+            padding: 50
+            spacing: 20
+
+            Button:
+                id: create_person_btn
+                size: 120, 50
+                size_hint: None, None
+                text: "Create"
+                font_size: 32
 
     BoxLayout:
         orientation: "vertical"
-        size: root.width, root.height
 
-        Label:
-            id: lbl_family_title
-            text: root.load_info()
-            font_size: 32
+        padding: 50
+        spacing: 20
 
-        Button:
-            text: "Add family member"
-            font_size: 32
-            on_release: app.root.current = "create_person_page"
+        BoxLayout:
+            orientation: "vertical"
 
-        Button:
-            text: "Have a conversation"
-            font_size: 32
-            on_release: app.root.current = "family_conversation_page"
+            Label:
+                id: conversation_lbl
+                text: "Cool, *NAME*! Choose someone in your family to talk to:"
+                font_size: 20
 
+            Spinner:
+                id: convesation_options
+                text: "Choose..."
+                values: ["Parent", "Child", "Partner", "Sibling"]
 
-<CreatePersonPage>:
-    name: "create_person_page"
+                on_text: root.spinner_clicked(conversation_options.text)
 
     BoxLayout:
         orientation: "vertical"
-        size: root.width, root.height
 
-        Label:
-            text:  "Create a person to join *FAMILY NAME* family"
-            font_size: 32
+        padding: 50
+        spacing: 20
 
-        Label:
-            id: set_rel_lbl
-            text: "Determine relationships with other family members*"
-            font_size: 32
+        BoxLayout:
+            orientation: "vertical"
 
-        Spinner:
-            id: relationship_options
-            text: "Choose..."
-            values: ["hej", "hello", "salut"]
+            Button:
+                id: start_convo
+                text: "Start conversation"
+                font_size: 32
+                #on_release: set_relation(selected_option)
 
-            on_text: root.spinner_clicked(relationship_options.text)
+            TextInput:
+                id: chatbox_input
 
-        Button:
-            text: "Create relationship"
-            font_size: 32
-            on_release: set_relation(selected_option)
-
-        Button:
-            text: "Add to *FAMILY NAME* family"
-            font_size: 32
-            on_release: app.root.current = "family_info_page"
-
-        Button:
-            text: "Go back"
-            font_size: 32
-            on_release: app.root.current = "family_info_page"
-
-<FamilyConversationPage>:
-    name: "family_conversation_page"
-
-    BoxLayout:
-        orientation: "vertical"
-        size: root.width, root.height
-
-        Label:
-            text:  "Family Conversation"
-            font_size: 32
-
-        Spinner:
-            id: player_options
-            text: "I want to play as..."
-            values: ["mamma", "pappa", "barn"]
-
-            on_text: root.spinner_clicked(relationship_options.text)
-
-        Button:
-            text: "Go back"
-            font_size: 32
-            on_release: app.root.current = "family_info_page"
+            Label:
+                id: chatbox_output_lbl
+                background_color: (197/255.0, 216/255.0, 209/255.0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                text: "Hey mama"
 
 
