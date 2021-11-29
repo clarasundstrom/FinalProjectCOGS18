@@ -44,7 +44,7 @@
                 text_size: self.size
 
             TextInput:
-                id: set_name_input
+                id: set_age_input
                 size: 250, 50
                 size_hint: None, None
 
@@ -60,6 +60,7 @@
                 size_hint: None, None
                 text: "Create"
                 font_size: 32
+                on_release: root.create_person(set_name_input.text, set_age_input.text), root.check_age(set_age_input.text)
 
     BoxLayout:
         orientation: "vertical"
@@ -72,15 +73,16 @@
 
             Label:
                 id: conversation_lbl
-                text: "Cool, *NAME*! Choose someone in your family to talk to:"
+                text: "Cool! Choose someone in your family to talk to:"
                 font_size: 20
 
             Spinner:
-                id: convesation_options
+                id: conversation_options
                 text: "Choose..."
-                values: ["Parent", "Child", "Partner", "Sibling"]
+                values: []
 
-                on_text: root.spinner_clicked(conversation_options.text)
+                #on_text: root.spinner_clicked(conversation_options.text)
+                on_release: 
 
     BoxLayout:
         orientation: "vertical"

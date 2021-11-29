@@ -5,6 +5,7 @@ from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
 
 #Imports from same directory
+from Classes.person import Person
 
 #Defining screens
 Window.size = (1920, 1080)
@@ -14,6 +15,35 @@ class StartPage(GridLayout):
 
     def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
        super().__init__(**kwargs)
+
+    def create_person(self, name, age):
+        """ DOCSTRING
+
+              Parameters
+              ------------
+
+              Output
+              ------------
+              """
+        new_person = Person()
+        new_person.name = name
+        new_person.age = age
+        print(new_person.name, ' ', new_person.age)
+
+    def check_age(self, age):
+        #options = []
+        warning = ""
+
+        if int(age) < 18:
+            self.ids.conversation_options.values = ["child", "sibling"]
+            #options = ["child", "sibling"]
+        elif int(age) > 18:
+            self.ids.conversation_options.values = ["parent", "partner", "child", "sibling"]
+            #options = ["parent", "partner", "child", "sibling"]
+        else:
+            warning = "Please select a number for age"
+        print( self.ids.conversation_options.values)
+        #return options
 
 #Setting up app
 class COGSGameApp(App):

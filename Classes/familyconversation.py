@@ -2,9 +2,11 @@
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
-#Imports from same directory
+#Import
+from random import random
 
 class FamilyConversation():
+
     def talk(convo_premise):
         """ DOCSTRING
 
@@ -60,3 +62,43 @@ class FamilyConversation():
                 "Us against mom and dad am I right?",
                 "I'll tell mom!!"
             ]
+
+        return possible_answers
+
+    def make_input_list(input):
+        out_list = []
+
+        temp_string = input.lower()
+        temp_string = temp_string.split(' ')
+
+        for x in temp_string:
+            out_list.append(x)
+
+        return out_list
+
+    def check_question(input_list):
+        output = False
+
+        if '?' in input_list[-1]:
+            output = True
+
+        return output
+
+    def select_output(input_list, check_list, return_list):
+        output = None
+
+        for x in input_list:
+            if x in check_list:
+                output = random.choice(return_list)
+                break
+        return output
+
+    def end_conversation(input_list):
+        output = "goodbye"
+
+        if "bye" or "Bye" in input_list:
+            output = True
+        else:
+            output = False
+
+        return output
