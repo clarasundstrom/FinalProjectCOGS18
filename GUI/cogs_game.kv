@@ -1,7 +1,22 @@
 <StartPage>
+
+    welcome_lbl: welcome_lbl
+    create_character_lbl: create_character_lbl
+    set_name_lbl: set_name_lbl
+    set_name_input: set_name_input
+    set_age_lbl: set_age_lbl
+    set_age_input: set_age_input
+    create_person_btn: create_person_btn
+    conversation_lbl: conversation_lbl
+    conversation_options: conversation_options
+    chatbox_history_lbl: chatbox_history_lbl
+    scroll_to_lbl: scroll_to_lbl
+    message_input: message_input
+    send_btn: send_btn
+
     rows: 4
 
-    background_color: (231/255.0, 231/255.0, 231/255.0, 1)
+    background_color: (249/255.0, 199/255.0, 132/255.0, 1)
     canvas.before:
         Color:
             rgba: self.background_color
@@ -13,25 +28,31 @@
         orientation: "vertical"
 
         padding: 50
-        spacing: 20
+        spacing: 50
+
+        Label:
+            id: welcome_lbl
+            text:  "Welcome! "
+            font_size: 50
 
         Label:
             id: create_character_lbl
             text:  "Create your character: "
-            font_size: 32
+            font_size: 35
 
     GridLayout:
-        cols: 2
+        rows: 2
+        cols: 3
 
         BoxLayout:
-            orientation: "vertical"
+            orientation: "horizontal"
             padding: 50
             spacing: 30
 
             Label:
                 id: set_name_lbl
                 text: "Name:"
-                text_size: self.size
+                font_size: 40
 
             TextInput:
                 id: set_name_input
@@ -41,18 +62,18 @@
             Label:
                 id: set_age_lbl
                 text: "Age:"
-                text_size: self.size
+                font_size: 40
 
             TextInput:
                 id: set_age_input
                 size: 250, 50
                 size_hint: None, None
 
-        BoxLayout:
-            orientation: "vertical"
+      #  BoxLayout:
+       #     orientation: "horizontal"
 
-            padding: 50
-            spacing: 20
+       #     padding: 50
+       #     spacing: 20
 
             Button:
                 id: create_person_btn
@@ -82,7 +103,7 @@
                 values: []
 
                 #on_text: root.spinner_clicked(conversation_options.text)
-                on_release: 
+                on_release:
 
     BoxLayout:
         orientation: "vertical"
@@ -93,24 +114,41 @@
         BoxLayout:
             orientation: "vertical"
 
-            Button:
-                id: start_convo
-                text: "Start conversation"
-                font_size: 32
-                #on_release: set_relation(selected_option)
+            GridLayout:
+                id: chatbox_layout
+                cols: 1
 
-            TextInput:
-                id: chatbox_input
+                ScrollView:
+                    Label:
+                        id: chatbox_history_lbl
+                        markup: True
+                        background_color: (197/255.0, 216/255.0, 209/255.0, 1)
+                        canvas.before:
+                            Color:
+                                rgba: self.background_color
+                            Rectangle:
+                                size: 1178, 120
+                                pos: self.pos
+                        text: "Hiya"
 
-            Label:
-                id: chatbox_output_lbl
-                background_color: (197/255.0, 216/255.0, 209/255.0, 1)
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                text: "Hey mama"
+                ScrollView:
+                    Label:
+                        id: scroll_to_lbl
+
+            GridLayout:
+                cols: 2
+
+                TextInput:
+                    id: message_input
+                    size: 900, 45
+                    size_hint: None, None
+
+                Button:
+                    id: send_btn
+                    size: 278, 45
+                    size_hint: None, None
+                    text: "Send"
+                    font_size: 32
+                    on_release: root.matching_phrases(root.ids.conversation_options.text), root.talk(), root.update_chat_history_lbl()
 
 
