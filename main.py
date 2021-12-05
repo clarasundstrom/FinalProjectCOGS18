@@ -1,4 +1,4 @@
-#GUI related imports
+# GUI related imports
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -6,20 +6,20 @@ from kivy.properties import ObjectProperty, Clock
 from kivy.uix.gridlayout import GridLayout
 from functools import partial
 
-#Imports from same directory
+# Imports from same directory
 from Classes.person import Person
-#from Classes.tests import Tests
+# from Classes.tests import Tests
 
 # Other imports
 import random
 
-#Defining screen
+# Defining screen
 Window.size = (1920, 1080)
 
 class StartPage(GridLayout):
     kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
-    #Creating properties for all objects in application to be able to communicate between Kivy and Python.
+    # Creating properties for all objects in application to be able to communicate between Kivy and Python.
     welcome_lbl = ObjectProperty(None)
     create_character_lbl = ObjectProperty(None)
     set_name_lbl = ObjectProperty(None)
@@ -33,6 +33,7 @@ class StartPage(GridLayout):
     chatbox_history_lbl = ObjectProperty(None)
     message_input = ObjectProperty(None)
     send_btn = ObjectProperty(None)
+
 
     def create_person(self, name, age):
         """ This method takes name and age as parameters and creates a person for the player to be in the conversation.
@@ -50,9 +51,9 @@ class StartPage(GridLayout):
         new_person.name = name
         new_person.age = age
 
-        print(new_person.name, ' ', new_person.age)
-        #Tests.test_methods()
+        # Tests.test_methods()
         return new_person
+
 
     def check_age(self, age):
         """ Checks if person is a child or not and determines what relations are possible. The possible relations
@@ -69,18 +70,15 @@ class StartPage(GridLayout):
 
         if int(age) < 18:
             self.ids.conversation_options.values = ["parent", "sibling"]
-            #options = ["child", "sibling"]
         elif int(age) > 18:
             self.ids.conversation_options.values = ["parent", "partner", "child", "sibling"]
-            #options = ["parent", "partner", "child", "sibling"]
         else:
            return warning
 
-        print(self.ids.conversation_options.values)
 
     def matching_phrases(self, convo_premise):
-        """ Based on who user chose to converse with, this method decide on the fitting phrases for the chat bot
-            responses.
+        """ Based on who user chose to converse with, this method decide on
+            fitting phrases for the chat bot responses.
 
               Parameters
               convo_premise: string
@@ -144,7 +142,8 @@ class StartPage(GridLayout):
 
         return answer
 
-    #From Assignmet 3
+
+    # Following code is from Assignmet 3
     def is_greeting(self, input_list):
         """ Determines if user input is a greeting or not, and return a greeting if yes.
 
@@ -168,6 +167,7 @@ class StartPage(GridLayout):
 
         return answer
 
+    # Following code is from Assignment 3
     def make_input_list(self, input):
         """ Makes the user input a list
 
@@ -188,7 +188,11 @@ class StartPage(GridLayout):
 
         return out_list
 
-    #Functions below are inspired by xxx's youtube series on kivy (link: xxx)
+
+    # Code below are inspired by sentdex's youtube series on kivy
+    # (link: https://www.youtube.com/playlist?list=PLQVvvaa0QuDfwnDTZWw8H3hN_VRQfq8rF)
+    # specifically: "Chat Application Page - Kivy Mobile and Desktop App Dev w/ Python"
+    # and "Finishing Chat Application - Kivy Mobile and Desktop App Dev w/ Python"
     def send_message(self):
         """ Takes user's input and put it in a label in the GUI. Clears the input box and calls on the function that
             prints the response in the same box.
@@ -208,6 +212,7 @@ class StartPage(GridLayout):
         self.chatbox_history_layout.height = 100
         Clock.schedule_once(partial(self.family_member_response, message), 0.5) #>use Clock so that the family response will come 0.5 seconds later
 
+    # Inspired by sentdex's youtube series on kivy
     def family_member_response(self, input, time_delay):
         """ Calls on talk() to print a response in the chatbox_history_lbl in GUI. Adds sender before message.
 
@@ -223,7 +228,8 @@ class StartPage(GridLayout):
         message = self.talk(input)
         self.chatbox_history_lbl.text += (f"\n {sender} :  {message}")
 
-    #From Assignment 3
+
+    # Following code is inspired by the talk method from Assignment 3
     def talk(self, input):
         """The function that runs the family conversation
 
@@ -237,10 +243,8 @@ class StartPage(GridLayout):
 
         while conversation:
             new_input = input
-            print(new_input + " is the input")
             family_output = ""
             player_input = self.make_input_list(new_input)
-            print(player_input)
 
             if self.is_greeting(player_input):
                 family_output += self.is_greeting(player_input)
@@ -250,10 +254,11 @@ class StartPage(GridLayout):
 
             return family_output
 
-#Setting up app
+
+# Setting up app
 class COGSGameApp(App):
     def build(self):
-        """ Builds the application.
+        """ Initializes the application.
 
                 Parameters
                 - no parameters except "self"
@@ -264,7 +269,7 @@ class COGSGameApp(App):
           """
         App.title = "COGS Game"
         Window.size = (1080, 720)
-        #Tests.test_methods()
+        # Tests.test_methods()
         return StartPage()
 
 if __name__ == "__main__":

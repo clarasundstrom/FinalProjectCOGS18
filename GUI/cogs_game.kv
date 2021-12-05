@@ -1,6 +1,6 @@
 <StartPage>
 
-    #Object property connections
+    # Object property connections
     welcome_lbl: welcome_lbl
     create_character_lbl: create_character_lbl
     set_name_lbl: set_name_lbl
@@ -15,7 +15,7 @@
     message_input: message_input
     send_btn: send_btn
 
-    #Layout and style for the whole window
+    # Layout and style for the whole window
     rows: 4
 
     background_color: (249/255.0, 199/255.0, 132/255.0, 1)
@@ -26,7 +26,7 @@
             size: self.size
             pos: self.pos
 
-    #Box containing welcome_lbl and create_character_lbl
+    # Box containing welcome_lbl and create_character_lbl
     BoxLayout:
         orientation: "vertical"
 
@@ -43,7 +43,7 @@
             text:  "Create your character: "
             font_size: 35
 
-    #Grid containing a box with widgets needed for the create person-functionality
+    # Grid containing a box with widgets needed for the create person-functionality
     GridLayout:
         rows: 2
         cols: 3
@@ -82,7 +82,7 @@
                 background_color: (170/255.0, 68/255.0, 101/255.0, 1)
                 on_release: root.create_person(set_name_input.text, set_age_input.text), root.check_age(set_age_input.text)
 
-    #Box containing label and drop down menu ("Spinner") for pick conversation partner-functionality
+    # Box containing label and drop down menu ("Spinner") for pick conversation partner-functionality
     BoxLayout:
         orientation: "vertical"
 
@@ -105,7 +105,7 @@
 
                 on_release: root.chatbox_history_lbl.text = ""
 
-    #Box containing label with scroll functionality, textinput and a button for chat- and chat history-functionality
+    # Box containing label with scroll functionality, textinput and a button for chat- and chat history-functionality
     BoxLayout:
         id: chatbox_history_layout
         orientation: "vertical"
