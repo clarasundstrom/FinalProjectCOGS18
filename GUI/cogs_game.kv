@@ -1,5 +1,6 @@
 <StartPage>
 
+    #Object property connections
     welcome_lbl: welcome_lbl
     create_character_lbl: create_character_lbl
     set_name_lbl: set_name_lbl
@@ -9,11 +10,12 @@
     create_person_btn: create_person_btn
     conversation_lbl: conversation_lbl
     conversation_options: conversation_options
+    chatbox_history_layout: chatbox_history_layout
     chatbox_history_lbl: chatbox_history_lbl
-    scroll_to_lbl: scroll_to_lbl
     message_input: message_input
     send_btn: send_btn
 
+    #Layout and style for the whole window
     rows: 4
 
     background_color: (249/255.0, 199/255.0, 132/255.0, 1)
@@ -24,6 +26,7 @@
             size: self.size
             pos: self.pos
 
+    #Box containing welcome_lbl and create_character_lbl
     BoxLayout:
         orientation: "vertical"
 
@@ -40,6 +43,7 @@
             text:  "Create your character: "
             font_size: 35
 
+    #Grid containing a box with widgets needed for the create person-functionality
     GridLayout:
         rows: 2
         cols: 3
@@ -69,20 +73,16 @@
                 size: 250, 50
                 size_hint: None, None
 
-      #  BoxLayout:
-       #     orientation: "horizontal"
-
-       #     padding: 50
-       #     spacing: 20
-
             Button:
                 id: create_person_btn
                 size: 120, 50
                 size_hint: None, None
                 text: "Create"
                 font_size: 32
+                background_color: (170/255.0, 68/255.0, 101/255.0, 1)
                 on_release: root.create_person(set_name_input.text, set_age_input.text), root.check_age(set_age_input.text)
 
+    #Box containing label and drop down menu ("Spinner") for pick conversation partner-functionality
     BoxLayout:
         orientation: "vertical"
 
@@ -100,55 +100,57 @@
             Spinner:
                 id: conversation_options
                 text: "Choose..."
+                background_color: (170/255.0, 68/255.0, 101/255.0, 1)
                 values: []
 
-                #on_text: root.spinner_clicked(conversation_options.text)
-                on_release:
+                on_release: root.chatbox_history_lbl.text = ""
 
+    #Box containing label with scroll functionality, textinput and a button for chat- and chat history-functionality
     BoxLayout:
+        id: chatbox_history_layout
         orientation: "vertical"
-
-        padding: 50
+        padding: 100
         spacing: 20
+        height: 50
 
         BoxLayout:
             orientation: "vertical"
+            size_hint_y: None
 
             GridLayout:
-                id: chatbox_layout
                 cols: 1
 
-                ScrollView:
-                    Label:
-                        id: chatbox_history_lbl
-                        markup: True
-                        background_color: (197/255.0, 216/255.0, 209/255.0, 1)
-                        canvas.before:
-                            Color:
-                                rgba: self.background_color
-                            Rectangle:
-                                size: 1178, 120
-                                pos: self.pos
-                        text: "Hiya"
-
-                ScrollView:
-                    Label:
-                        id: scroll_to_lbl
+            ScrollView:
+                Label:
+                    id: chatbox_history_lbl
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    text: ""
+                    markup: True
+                    background_color: (197/255.0, 216/255.0, 209/255.0, 1)
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        Rectangle:
+                            size: chatbox_history_lbl.size
+                            pos: self.pos
 
             GridLayout:
                 cols: 2
 
                 TextInput:
                     id: message_input
-                    size: 900, 45
+                    size: 850, 45
                     size_hint: None, None
 
                 Button:
                     id: send_btn
-                    size: 278, 45
+                    size: 228, 45
                     size_hint: None, None
                     text: "Send"
                     font_size: 32
-                    on_release: root.matching_phrases(root.ids.conversation_options.text), root.talk(), root.update_chat_history_lbl()
+                    background_color: (170/255.0, 68/255.0, 101/255.0, 1)
+                    on_release: root.matching_phrases(root.ids.conversation_options.text), root.send_message()
 
 

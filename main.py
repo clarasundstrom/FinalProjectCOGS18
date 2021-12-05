@@ -2,22 +2,24 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, Clock
 from kivy.uix.gridlayout import GridLayout
-
+from functools import partial
 
 #Imports from same directory
 from Classes.person import Person
+#from Classes.tests import Tests
 
-#Imports
+# Other imports
 import random
 
-#Defining screens
+#Defining screen
 Window.size = (1920, 1080)
 
 class StartPage(GridLayout):
     kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
+    #Creating properties for all objects in application to be able to communicate between Kivy and Python.
     welcome_lbl = ObjectProperty(None)
     create_character_lbl = ObjectProperty(None)
     set_name_lbl = ObjectProperty(None)
@@ -27,31 +29,43 @@ class StartPage(GridLayout):
     create_person_btn = ObjectProperty(None)
     conversation_lbl = ObjectProperty(None)
     conversation_options = ObjectProperty(None)
+    chatbox_history_layout = ObjectProperty(None)
     chatbox_history_lbl = ObjectProperty(None)
-    scroll_to_lbl = ObjectProperty(None)
     message_input = ObjectProperty(None)
     send_btn = ObjectProperty(None)
 
-    def __init__(self, **kwargs):  # defining an init method....LOOK UP WHY THIS IS NEEDED
-       super().__init__(**kwargs)
-
     def create_person(self, name, age):
-        """ DOCSTRING
+        """ This method takes name and age as parameters and creates a person for the player to be in the conversation.
 
               Parameters
-              ------------
+              name: string
+              age: int
 
               Output
-              ------------
-              """
+              - no output
+
+        """
+
         new_person = Person()
         new_person.name = name
         new_person.age = age
+
         print(new_person.name, ' ', new_person.age)
+        #Tests.test_methods()
+        return new_person
 
     def check_age(self, age):
-        #options = []
-        warning = ""
+        """ Checks if person is a child or not and determines what relations are possible. The possible relations
+            become values in the drop-down menu.
+
+                Parameters
+                age: int
+
+                Output
+                - no output
+
+        """
+        warning = "Please select a number for age"
 
         if int(age) < 18:
             self.ids.conversation_options.values = ["parent", "sibling"]
@@ -60,19 +74,21 @@ class StartPage(GridLayout):
             self.ids.conversation_options.values = ["parent", "partner", "child", "sibling"]
             #options = ["parent", "partner", "child", "sibling"]
         else:
-            warning = "Please select a number for age"
+           return warning
+
         print(self.ids.conversation_options.values)
-        #return options
 
     def matching_phrases(self, convo_premise):
-        """ DOCSTRING
+        """ Based on who user chose to converse with, this method decide on the fitting phrases for the chat bot
+            responses.
 
               Parameters
-              ------------
+              convo_premise: string
 
               Output
-              ------------
-              """
+              answer: string
+
+        """
         possible_answers = []
 
         if convo_premise == "parent":
@@ -84,6 +100,10 @@ class StartPage(GridLayout):
                 "Your room looks like a cyclone ran through it.",
                 "Talking to you is like talking to a brick wall.",
                 "Let's play the quiet game.",
+                "I'm so proud of you!",
+                "Have you called granny recently?",
+                "I'll make pancakes for dinner tonight",
+                "I got a call from your teacher today..."
                 "Where are your manners - were you raised by wolves?"
             ]
         elif convo_premise == "child":
@@ -106,7 +126,8 @@ class StartPage(GridLayout):
                 "Do you want me to put on our song?",
                 "You mean the world to me",
                 "Let's have take out for dinner",
-                "You're the June to my Johnny"
+                "You're the June to my Johnny",
+                "All I want for christmas is you"
             ]
         elif convo_premise == "sibling":
             possible_answers = [
@@ -120,25 +141,43 @@ class StartPage(GridLayout):
                 "I'll tell mom!!"
             ]
         answer = random.choice(possible_answers)
-        #print(answer + "print")
+
         return answer
 
     #From Assignmet 3
     def is_greeting(self, input_list):
+        """ Determines if user input is a greeting or not, and return a greeting if yes.
+
+                Parameters
+                input_list: list
+
+                Output
+                answer: string or None
+
+        """
         answer = ""
-        greeting_input = ["hi", "hello"]
-        conversation_starter = ["Hello!", "Yo", "Hi", "Hey!", "Where have you been?", "Good to hear from you!", "Hello my favorite person <3"]
+        greeting_input = ["hi", "hello", "hey"]
+        conversation_starter = ["Hello! ", "Yo! ", "Hi! ", "Hey! ", "Where have you been? ", "Good to hear from you! ", "Hello my favorite person <3 "]
 
         for val in input_list:
             if val in greeting_input:
                 answer = random.choice(conversation_starter)
-                print(answer + " bobob")
+                break
             else:
                 answer = None
 
         return answer
 
     def make_input_list(self, input):
+        """ Makes the user input a list
+
+                Parameters
+                input: string
+
+                Output
+                out_list: list
+
+        """
         out_list = []
 
         temp_string = input.lower()
@@ -149,64 +188,83 @@ class StartPage(GridLayout):
 
         return out_list
 
-    #Functions below are from xxx's youtube series on kivy (link: xxx)
+    #Functions below are inspired by xxx's youtube series on kivy (link: xxx)
     def send_message(self):
+        """ Takes user's input and put it in a label in the GUI. Clears the input box and calls on the function that
+            prints the response in the same box.
+
+                Parameters
+                - no parameters except "self"
+
+                Output
+                - no output
+
+          """
         sender = self.set_name_input.text
         message = self.message_input.text
 
-        self.chatbox_history_lbl.text = (f"{sender} :  {message}")
+        self.chatbox_history_lbl.text += (f"\n {sender} :  {message}")
         self.message_input.text = ""
+        self.chatbox_history_layout.height = 100
+        Clock.schedule_once(partial(self.family_member_response, message), 0.5) #>use Clock so that the family response will come 0.5 seconds later
 
-    def focus_on_input(self):
-        self.ids.message_input.focus = True
+    def family_member_response(self, input, time_delay):
+        """ Calls on talk() to print a response in the chatbox_history_lbl in GUI. Adds sender before message.
 
-    def family_member_response(self):
-        put = self.update_chat_history_lbl(f"[color = 20dd20]{self.ids.conversation_options.text}[/color] > {self.talk()}")
-        return put
+                Parameters
+                input: string
+                time_delay: float
 
-    def update_chat_history_lbl(self):
-        sender = self.set_name_input.text
-        message = self.message_input.text
+                Output
+                - no output
 
-        self.chatbox_history_lbl.text = (f"{sender} :  {message}")
-        self.message_input.text = ""
-
-        label_content = self.ids.chatbox_history_lbl.text
-
-        label_content += "\n" + message + "\n it works indeed"
-
-        self.ids.chatbox_layout.height = self.ids.chatbox_history_lbl.texture_size[1] + 15
-        self.ids.chatbox_history_lbl.height = self.ids.chatbox_history_lbl.texture_size[1]
-
-    def on_key_down(self, instance, keyboard, keycode, text, modifiers):
-        if keycode == 40:
-            self.send_message()
+        """
+        sender = self.conversation_options.text
+        message = self.talk(input)
+        self.chatbox_history_lbl.text += (f"\n {sender} :  {message}")
 
     #From Assignment 3
-    def talk(self):
-        """The function that runs the family conversation"""
-        #self.update_chat_history_lbl(f"[color = dd2020]{self.ids.set_name_input.text}[/color] > {self.ids.message_input.text}")
+    def talk(self, input):
+        """The function that runs the family conversation
 
+                Parameters
+                input: string
+
+                Output
+                family_output: string
+        """
         conversation = True
 
         while conversation:
-            new_input = self.ids.message_input.text
+            new_input = input
             print(new_input + " is the input")
             family_output = ""
-
             player_input = self.make_input_list(new_input)
-            family_output = self.is_greeting(player_input)
-            family_output = self.matching_phrases(self.ids.conversation_options.text)
-            #self.update_chat_history_lbl(f"[color = 20dd20]{self.ids.conversation_options.text}[/color] > {family_output}")
+            print(player_input)
 
-            print(family_output + " is printed from talk()")
+            if self.is_greeting(player_input):
+                family_output += self.is_greeting(player_input)
+                family_output += self.matching_phrases(self.ids.conversation_options.text)
+            else:
+                family_output = self.matching_phrases(self.ids.conversation_options.text)
+
             return family_output
 
 #Setting up app
 class COGSGameApp(App):
     def build(self):
+        """ Builds the application.
+
+                Parameters
+                - no parameters except "self"
+
+                Output
+                StartPage: class
+
+          """
         App.title = "COGS Game"
         Window.size = (1080, 720)
+        #Tests.test_methods()
         return StartPage()
 
 if __name__ == "__main__":

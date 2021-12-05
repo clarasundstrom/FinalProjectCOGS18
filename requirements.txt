@@ -1,0 +1,12 @@
+    REQUIREMENTS
+
+    - As I've created an interface, Kivy is required to run the code.
+
+
+    IF I HAD MORE TIME...
+
+    - Error handling so that the application doesn't crash when user input is the wrong type, for example if
+    a string is the input instead of an int as the age in create_person.
+
+    - Bigger chatbox_history_lbl, so that the user won't have to scroll so much
+

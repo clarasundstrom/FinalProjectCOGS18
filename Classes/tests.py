@@ -1,41 +1,30 @@
-from family import Family
-from person import Person
-from familyconversation import FamilyConversation
+from main import StartPage
 
 class Tests():
-    # Testing
 
-    # Create a family DON'T KNOW HOW TO TEST DO YET
-    def test_
-    test_family = Family("McGill")
-    assert callable(test_family)
-    assert test_family.last_name == "McGill"
+    # Some tests
+    def test_methods(self):
 
-    # Create a person - DON'T KNOW HOW TO TEST DO YET
-    test_person = Person("Jill", 43)
-    assert test_person.name == "Jill" and test_person.age == 43
+        # Create a person
+        test_person = StartPage.create_person("Jill", 43)
+        assert callable(StartPage.create_person)
+        assert test_person.name == "Jill" and test_person.age == 43
+        print("Tests are run!! 1")
 
-    test_person2 = Person("Jill", 2)
-    assert test_person2.name == "Jill" and test_person2.age == 2
+        # Match phrases with family member
+        test_phrase = StartPage.matching_phrases("sibling")
+        assert callable(StartPage.matching_phrases)
+        assert test_phrase ==  "You're so annoying." or "Get out of my room!" or "Hey that's my t-shirt!!" or "Hahahah mom is such a dork by the way"\
+                            or "Did you eat all of my snacks?" or "I'm so glad you're my sibling" or "Us against mom and dad am I right?"\
+                            or "I'll tell mom!!"
 
-    # Add person to family
-    def test_add_member():
-        assert callable(add_member)
+        print("Tests are run!! 2")
 
-    test_family.add_member(test_person)
-    assert test_family.members == ["Jill"]
+        #Say something as a result of user input
+        test_age = StartPage.check_age("test")
+        assert test_age == "Please select a number for age"
 
-    # Try to add person with existing name
-    test_family.add_member(test_person2)
-    print(test_family.members)
+class RunTests():
+    Tests.test_methods()
 
-    # Check family size
-    print(test_family.check_size())
 
-    # Change name of person
-    # NOTE name will JUST change name in object - not in test_family.members i.e.
-    # It's ok as it won't be possible to add person with same name.
-    # You can only change name when fail to add to family bc of same name.
-
-    # test_person.change_name("Lola")
-    # print(test_person.name)
