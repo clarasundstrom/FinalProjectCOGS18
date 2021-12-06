@@ -31,6 +31,7 @@ class Tests():
         print("Test run 3!!!")
 
     def run_all_tests(self):
+        """Runs all test methods"""
         self.test_create_person()
         self.test_matching_phrases()
         self.test_check_age()
