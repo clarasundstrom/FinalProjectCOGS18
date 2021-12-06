@@ -14,9 +14,6 @@ from Classes.person import Person
 # Other imports
 import random
 
-# Defining screen
-Window.size = (1920, 1080)
-
 class StartPage(GridLayout):
     kv = Builder.load_file("GUI/cogs_game.kv") #Designating the .kv design file
 
@@ -73,7 +70,7 @@ class StartPage(GridLayout):
                 - None
 
         """
-        warning = "Please select a number for age"
+        warning = ""
 
         if int(age) < 18:
             self.ids.conversation_options.values = ["parent", "sibling"]
@@ -285,7 +282,8 @@ class StartPage(GridLayout):
             return family_output
 
 
-# Setting up app
+# Setting up app - I figured this out when researching on several threads
+# at stackoverflow.com and videos on Youtube
 class COGSGameApp(App):
     def build(self):
         """ Initializes the application.
@@ -302,7 +300,7 @@ class COGSGameApp(App):
           """
         App.title = "COGS Game"
         Window.size = (1080, 720)
-        # Tests.test_methods()
+
         return StartPage()
 
 if __name__ == "__main__":

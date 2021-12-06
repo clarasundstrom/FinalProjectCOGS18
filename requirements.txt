@@ -2,4 +2,3 @@
 
     - As I've created an interface in Kivy, Kivy is required to run the code.
     - I installed jupyter
-
