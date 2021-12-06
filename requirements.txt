@@ -1,6 +1,6 @@
     REQUIREMENTS
 
-    - As I've created an interface, Kivy is required to run the code.
+    - As I've created an interface in Kivy, Kivy is required to run the code.
 
 
     IF I HAD MORE TIME...
@@ -9,4 +9,11 @@
     a string is the input instead of an int as the age in create_person.
 
     - Bigger chatbox_history_lbl, so that the user won't have to scroll so much
+
+    - Initially, my plan was to be more ambitious, but I realised I didn't have enough time. The functionality
+    I would add is:
+        -> Create a family
+        -> Create several people and add them to the family
+        -> Assign every family member relationships with the other members
+        -> Pick the members in the dropdown menu, not just the roles like it is now
 

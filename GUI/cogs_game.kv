@@ -1,3 +1,5 @@
+#This file contains all code related to the interface
+
 <StartPage>
 
     # Object property connections
@@ -26,7 +28,7 @@
             size: self.size
             pos: self.pos
 
-    # Box containing welcome_lbl and create_character_lbl
+    # Boxlayout containing welcome_lbl and create_character_lbl
     BoxLayout:
         orientation: "vertical"
 
@@ -35,15 +37,17 @@
 
         Label:
             id: welcome_lbl
-            text:  "Welcome! "
+            text:  "Welcome!"
+            font_name: "Cour"
             font_size: 50
 
         Label:
             id: create_character_lbl
             text:  "Create your character: "
+            font_name: "Cour"
             font_size: 35
 
-    # Grid containing a box with widgets needed for the create person-functionality
+    # Grid containing a boxlayout with widgets needed for the create person-functionality
     GridLayout:
         rows: 2
         cols: 3
@@ -56,20 +60,24 @@
             Label:
                 id: set_name_lbl
                 text: "Name:"
+                font_name: "Cour"
                 font_size: 40
 
             TextInput:
                 id: set_name_input
+                font_name: "Cour"
                 size: 250, 50
                 size_hint: None, None
 
             Label:
                 id: set_age_lbl
                 text: "Age:"
+                font_name: "Cour"
                 font_size: 40
 
             TextInput:
                 id: set_age_input
+                font_name: "Cour"
                 size: 250, 50
                 size_hint: None, None
 
@@ -78,11 +86,13 @@
                 size: 120, 50
                 size_hint: None, None
                 text: "Create"
+                font_name: "Cour"
                 font_size: 32
-                background_color: (170/255.0, 68/255.0, 101/255.0, 1)
+                background_normal: ""
+                background_color: (75/255.0, 29/255.0, 42/255.0, 1)
                 on_release: root.create_person(set_name_input.text, set_age_input.text), root.check_age(set_age_input.text)
 
-    # Box containing label and drop down menu ("Spinner") for pick conversation partner-functionality
+    # Boxlayout containing label and drop down menu ("Spinner") for pick conversation partner-functionality
     BoxLayout:
         orientation: "vertical"
 
@@ -95,17 +105,20 @@
             Label:
                 id: conversation_lbl
                 text: "Cool! Choose someone in your family to talk to:"
-                font_size: 20
+                font_name: "Cour"
+                font_size: 30
 
             Spinner:
                 id: conversation_options
                 text: "Choose..."
-                background_color: (170/255.0, 68/255.0, 101/255.0, 1)
+                font_name: "Cour"
+                background_normal: ""
+                background_color: (75/255.0, 29/255.0, 42/255.0, 1)
                 values: []
 
                 on_release: root.chatbox_history_lbl.text = ""
 
-    # Box containing label with scroll functionality, textinput and a button for chat- and chat history-functionality
+    # Boxlayout containing label with scroll functionality, textinput and a button for chat- and chat history-functionality
     BoxLayout:
         id: chatbox_history_layout
         orientation: "vertical"
@@ -121,14 +134,18 @@
                 cols: 1
 
             ScrollView:
+                size_hint: (None, None)
+                size: (1080, 100)
+                pos_hint: {'center_x': .5, 'center_y': .62}
                 Label:
                     id: chatbox_history_lbl
                     size_hint_y: None
+                    size: (1080, 1000)
                     text_size: self.width, None
                     height: self.texture_size[1]
                     text: ""
-                    markup: True
-                    background_color: (197/255.0, 216/255.0, 209/255.0, 1)
+                    font_name: "Cour"
+                    background_color: (175/255.0, 67/255.0, 25/255.0, 1)
                     canvas.before:
                         Color:
                             rgba: self.background_color
@@ -141,6 +158,7 @@
 
                 TextInput:
                     id: message_input
+                    font_name: "Cour"
                     size: 850, 45
                     size_hint: None, None
 
@@ -149,8 +167,10 @@
                     size: 228, 45
                     size_hint: None, None
                     text: "Send"
+                    font_name: "Cour"
                     font_size: 32
-                    background_color: (170/255.0, 68/255.0, 101/255.0, 1)
+                    background_normal: ""
+                    background_color: (75/255.0, 29/255.0, 42/255.0, 1)
                     on_release: root.matching_phrases(root.ids.conversation_options.text), root.send_message()
 
 

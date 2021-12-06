@@ -1,3 +1,5 @@
+""" Main module with all methods and initialization of app"""
+
 # GUI related imports
 from kivy.app import App
 from kivy.lang import Builder
@@ -8,7 +10,6 @@ from functools import partial
 
 # Imports from same directory
 from Classes.person import Person
-# from Classes.tests import Tests
 
 # Other imports
 import random
@@ -39,11 +40,15 @@ class StartPage(GridLayout):
         """ This method takes name and age as parameters and creates a person for the player to be in the conversation.
 
               Parameters
+              ----------
               name: string
+                comes from the TextInput-widget for name in the app
               age: int
+                comes from the TextInput-widget for age in the app
 
-              Output
-              - no output
+              Returns
+              ----------
+              - None
 
         """
 
@@ -51,7 +56,6 @@ class StartPage(GridLayout):
         new_person.name = name
         new_person.age = age
 
-        # Tests.test_methods()
         return new_person
 
 
@@ -60,10 +64,13 @@ class StartPage(GridLayout):
             become values in the drop-down menu.
 
                 Parameters
+                ----------
                 age: int
+                    comes from the TextInput-widget for age in the app
 
-                Output
-                - no output
+                Returns
+                ----------
+                - None
 
         """
         warning = "Please select a number for age"
@@ -81,11 +88,15 @@ class StartPage(GridLayout):
             fitting phrases for the chat bot responses.
 
               Parameters
+              ----------
               convo_premise: string
+                comes from the Spinner-widget (dropdown menu) for family members in the app
 
-              Output
+              Returns
+              ----------
               answer: string
-
+                returns a randomly picked phrase from list of possible answers that
+                match with the role of the family member (conve_premise)
         """
         possible_answers = []
 
@@ -125,7 +136,9 @@ class StartPage(GridLayout):
                 "You mean the world to me",
                 "Let's have take out for dinner",
                 "You're the June to my Johnny",
-                "All I want for christmas is you"
+                "All I want for christmas is you",
+                "Yes!",
+                "Nah"
             ]
         elif convo_premise == "sibling":
             possible_answers = [
@@ -143,16 +156,44 @@ class StartPage(GridLayout):
         return answer
 
 
-    # Following code is from Assignmet 3
-    def is_greeting(self, input_list):
-        """ Determines if user input is a greeting or not, and return a greeting if yes.
+    # Following code is from Assignment 3
+    def make_input_list(self, input):
+        """ Makes the user input a list
 
                 Parameters
+                ----------
+                input: string
+                    comes from the TextInput-widget for chatbox in the app
+
+                Returns
+                ----------
+                out_list: list
+                    returns a list form of the input, where input has been split after every space
+        """
+        out_list = []
+
+        temp_string = input.lower()
+        temp_string = temp_string.split(' ')
+
+        for x in temp_string:
+            out_list.append(x)
+
+        return out_list
+
+
+    # Following code is from Assignmet 3
+    def is_greeting(self, input_list):
+        """ Determines if user input is a greeting or not, and returns a greeting if yes.
+
+                Parameters
+                ----------
                 input_list: list
+                    user input from the TextInput-widget for the chatbox in app, but in list form
 
-                Output
+                Returns
+                ----------
                 answer: string or None
-
+                    returns a greeting if input_list contains greeting, if not: returns None
         """
         answer = ""
         greeting_input = ["hi", "hello", "hey"]
@@ -167,41 +208,22 @@ class StartPage(GridLayout):
 
         return answer
 
-    # Following code is from Assignment 3
-    def make_input_list(self, input):
-        """ Makes the user input a list
 
-                Parameters
-                input: string
-
-                Output
-                out_list: list
-
-        """
-        out_list = []
-
-        temp_string = input.lower()
-        temp_string = temp_string.split(' ')
-
-        for x in temp_string:
-            out_list.append(x)
-
-        return out_list
-
-
-    # Code below are inspired by sentdex's youtube series on kivy
-    # (link: https://www.youtube.com/playlist?list=PLQVvvaa0QuDfwnDTZWw8H3hN_VRQfq8rF)
-    # specifically: "Chat Application Page - Kivy Mobile and Desktop App Dev w/ Python"
+    # Code below is inspired by sentdex's youtube series on kivy:
+    # link: https://www.youtube.com/playlist?list=PLQVvvaa0QuDfwnDTZWw8H3hN_VRQfq8rF
+    # specifically videos: "Chat Application Page - Kivy Mobile and Desktop App Dev w/ Python"
     # and "Finishing Chat Application - Kivy Mobile and Desktop App Dev w/ Python"
     def send_message(self):
-        """ Takes user's input and put it in a label in the GUI. Clears the input box and calls on the function that
-            prints the response in the same box.
+        """ Takes user's input and put it in a label in the GUI. Clears the input box and calls on the
+            function that prints the response in the same box.
 
                 Parameters
+                ----------
                 - no parameters except "self"
 
-                Output
-                - no output
+                Returns
+                ----------
+                - None
 
           """
         sender = self.set_name_input.text
@@ -214,14 +236,19 @@ class StartPage(GridLayout):
 
     # Inspired by sentdex's youtube series on kivy
     def family_member_response(self, input, time_delay):
-        """ Calls on talk() to print a response in the chatbox_history_lbl in GUI. Adds sender before message.
+        """ Calls on talk() to print a response in the chatbox_history_lbl in GUI.
+         Adds sender before message (e.g "parent: {message}")
 
                 Parameters
+                ----------
                 input: string
+                    string comes from the send_message method
                 time_delay: float
+                    the amount of time to wait to execute this method after it's been called
 
-                Output
-                - no output
+                Returns
+                ----------
+                - None
 
         """
         sender = self.conversation_options.text
@@ -234,10 +261,13 @@ class StartPage(GridLayout):
         """The function that runs the family conversation
 
                 Parameters
+                ----------
                 input: string
-
-                Output
+                    comes from the TextInput-widget for chatbox in the app
+                Returns
+                ----------
                 family_output: string
+                    returns the phrase to be printed in chatbox label in the app
         """
         conversation = True
 
@@ -261,10 +291,13 @@ class COGSGameApp(App):
         """ Initializes the application.
 
                 Parameters
+                ----------
                 - no parameters except "self"
 
-                Output
+                Returns
+                ----------
                 StartPage: class
+                    returns the StartPage window in the app
 
           """
         App.title = "COGS Game"
