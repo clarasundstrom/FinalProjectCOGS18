@@ -109,7 +109,7 @@ class StartPage(GridLayout):
                 "I'm so proud of you!",
                 "Have you called granny recently?",
                 "I'll make pancakes for dinner tonight",
-                "I got a call from your teacher today..."
+                "I got a call from your teacher today...",
                 "Where are your manners - were you raised by wolves?"
             ]
         elif convo_premise == "child":

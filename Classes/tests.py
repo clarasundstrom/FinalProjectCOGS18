@@ -17,9 +17,9 @@ class Tests():
         """ Test to match phrases with family member """
         test_phrase = StartPage.matching_phrases("sibling")
         assert callable(StartPage.matching_phrases)
-        assert test_phrase ==  "You're so annoying." or "Get out of my room!" or "Hey that's my t-shirt!!" or "Hahahah mom is such a dork by the way"\
-                            or "Did you eat all of my snacks?" or "I'm so glad you're my sibling" or "Us against mom and dad am I right?"\
-                            or "I'll tell mom!!"
+        assert test_phrase == "You're so annoying." or "Get out of my room!" or "Hey that's my t-shirt!!" or "Hahahah mom is such a dork by the way" \
+               or "Did you eat all of my snacks?" or "I'm so glad you're my sibling" or "Us against mom and dad am I right?" \
+               or "I'll tell mom!!"
 
         print("Tests run!! 2")
 
@@ -29,6 +29,7 @@ class Tests():
         test_age = StartPage.check_age("test")
         assert test_age == "Please select a number for age"
         print("Test run 3!!!")
+
 
     def run_all_tests(self):
         """Runs all test methods"""
