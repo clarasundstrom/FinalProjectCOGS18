@@ -1,11 +1,5 @@
 class Person():
 
-    def __init__(self):
-        self.name = ""
-        self.age = ""
-        self.last_name = ""
-        self.roles = {}
-
     def create_person(self, name, age):
         """ DOCSTRING
 
@@ -20,4 +14,3 @@ class Person():
         new_person.age = age
 
         return new_person.name
-
