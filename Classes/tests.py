@@ -1,5 +1,6 @@
 """ Test file containing tests for some methods in the project"""
 from main import StartPage
+import pytest
 
 class Tests():
 

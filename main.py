@@ -1,4 +1,4 @@
-""" Main module with all methods and initialization of app"""
+""" Main module with all methods and initialization of app """
 
 # GUI related imports
 from kivy.app import App
